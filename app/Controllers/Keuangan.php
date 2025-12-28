@@ -115,7 +115,7 @@ class Keuangan extends BaseController
         $data = [
             'title' => 'Input Iuran Warga',
             'user' => [
-                ' lengkap' => session()->get('nama_lengkap'),
+                'nama_lengkap' => session()->get('nama_lengkap'),
                 'role' => session()->get('role'),
             ],
             'list_kk' => $listKK,
