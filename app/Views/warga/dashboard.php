@@ -6,7 +6,6 @@
     <title><?= $title ?> - Si-RT</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
     <style>
         :root { --primary: #2563EB; --secondary: #10B981; --sidebar-width: 260px; }
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #F9FAFB; }
@@ -157,11 +156,15 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
     <script>
-        // Gender Chart
-        const genderCtx = document.getElementById('genderChart').getContext('2d');
-        const genderData = <?= json_encode($stats_gender) ?>;
-        new Chart(genderCtx, {
+        // Prevent auto-scroll and ensure charts render only after DOM is ready
+        document.addEventListener('DOMContentLoaded', function() {
+            // Gender Chart
+            const genderCtx = document.getElementById('genderChart');
+            const genderData = <?= json_encode($stats_gender) ?>;
+            if (genderCtx) {
+                new Chart(genderCtx.getContext('2d'), {
             type: 'doughnut',
             data: {
                 labels: genderData.map(s => s.jenis_kelamin === 'L' ? 'Laki-laki' : 'Perempuan'),
@@ -173,14 +176,16 @@
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
-                plugins: { legend: { position: 'bottom' } }
+                    plugins: { legend: { position: 'bottom' } }
+                }
+            });
             }
-        });
 
-        // Agama Chart
-        const agamaCtx = document.getElementById('agamaChart').getContext('2d');
-        const agamaData = <?= json_encode($stats_agama) ?>;
-        new Chart(agamaCtx, {
+            // Agama Chart
+            const agamaCtx = document.getElementById('agamaChart');
+            const agamaData = <?= json_encode($stats_agama) ?>;
+            if (agamaCtx) {
+                new Chart(agamaCtx.getContext('2d'), {
             type: 'bar',
             data: {
                 labels: agamaData.map(s => s.agama),
@@ -194,14 +199,16 @@
                 responsive: true,
                 maintainAspectRatio: false,
                 plugins: { legend: { display: false } },
-                scales: { y: { beginAtZero: true } }
+                    scales: { y: { beginAtZero: true } }
+                }
+            });
             }
-        });
 
-        // Usia Chart
-        const usiaCtx = document.getElementById('usiaChart').getContext('2d');
-        const usiaData = <?= json_encode($stats_usia) ?>;
-        new Chart(usiaCtx, {
+            // Usia Chart
+            const usiaCtx = document.getElementById('usiaChart');
+            const usiaData = <?= json_encode($stats_usia) ?>;
+            if (usiaCtx) {
+                new Chart(usiaCtx.getContext('2d'), {
             type: 'pie',
             data: {
                 labels: usiaData.map(s => s.kategori_usia),
@@ -213,7 +220,9 @@
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
-                plugins: { legend: { position: 'bottom' } }
+                    plugins: { legend: { position: 'bottom' } }
+                }
+            });
             }
         });
     </script>

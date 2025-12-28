@@ -6,7 +6,6 @@
     <title><?= $title ?? 'Dashboard Keuangan' ?> - Si-RT</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
     <style>
         :root {
             --primary: #2563EB;
@@ -233,68 +232,70 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
     <script>
-        // Iuran Category Chart
-        const iuranCtx = document.getElementById('iuranCategoryChart').getContext('2d');
-        new Chart(iuranCtx, {
-            type: 'doughnut',
-            data: {
-                labels: <?= json_encode(array_column($iuran_by_category, 'nama_kategori')) ?>,
-                datasets: [{
-                    data: <?= json_encode(array_column($iuran_by_category, 'total')) ?>,
-                    backgroundColor: [
-                        '#2563EB',
-                        '#10B981',
-                        '#F59E0B',
-                        '#EF4444',
-                        '#8B5CF6'
-                    ]
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        position: 'bottom'
-                    }
-                }
-            }
-        });
-
-        // Saldo Trend Chart
-        const trendCtx = document.getElementById('saldoTrendChart').getContext('2d');
-        new Chart(trendCtx, {
-            type: 'line',
-            data: {
-                labels: <?= json_encode(array_column($saldo_trend, 'month')) ?>,
-                datasets: [{
-                    label: 'Saldo Kas',
-                    data: <?= json_encode(array_column($saldo_trend, 'saldo')) ?>,
-                    borderColor: '#10B981',
-                    backgroundColor: 'rgba(16, 185, 129, 0.1)',
-                    tension: 0.4,
-                    fill: true
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        display: false
-                    }
-                },
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        ticks: {
-                            callback: function(value) {
-                                return 'Rp ' + value.toLocaleString('id-ID');
+        // Prevent auto-scroll and ensure charts render only after DOM is ready
+        document.addEventListener('DOMContentLoaded', function() {
+            // Iuran Category Chart
+            const iuranCtx = document.getElementById('iuranCategoryChart');
+            if (iuranCtx) {
+                new Chart(iuranCtx.getContext('2d'), {
+                    type: 'doughnut',
+                    data: {
+                        labels: <?= json_encode(array_column($iuran_by_category, 'nama_kategori')) ?>,
+                        datasets: [{
+                            data: <?= json_encode(array_column($iuran_by_category, 'total')) ?>,
+                            backgroundColor: ['#2563EB', '#10B981', '#F59E0B', '#EF4444', '#8B5CF6']
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                position: 'bottom'
                             }
                         }
                     }
-                }
+                });
+            }
+
+            // Saldo Trend Chart
+            const trendCtx = document.getElementById('saldoTrendChart');
+            if (trendCtx) {
+                new Chart(trendCtx.getContext('2d'), {
+                    type: 'line',
+                    data: {
+                        labels: <?= json_encode(array_column($saldo_trend, 'month')) ?>,
+                        datasets: [{
+                            label: 'Saldo Kas',
+                            data: <?= json_encode(array_column($saldo_trend, 'saldo')) ?>,
+                            borderColor: '#10B981',
+                            backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                            tension: 0.4,
+                            fill: true
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                display: false
+                            }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                ticks: {
+                                    callback: function(value) {
+                                        return 'Rp ' + value.toLocaleString('id-ID');
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
             }
         });
     </script>
