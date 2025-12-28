@@ -1,68 +1,113 @@
-# CodeIgniter 4 Application Starter
+# Si-RT (Sistem Informasi Rukun Tetangga)
 
-## What is CodeIgniter?
+> **Aplikasi Manajemen Keuangan dan Administrasi RT Berbasis Web & Mobile**
 
-CodeIgniter is a PHP full-stack web framework that is light, fast, flexible and secure.
-More information can be found at the [official site](https://codeigniter.com).
+[![CodeIgniter](https://img.shields.io/badge/CodeIgniter-4.6.4-orange)](https://codeigniter.com/)
+[![PHP](https://img.shields.io/badge/PHP-8.3.26-blue)](https://www.php.net/)
+[![MySQL](https://img.shields.io/badge/MySQL-8.4.3-blue)](https://www.mysql.com/)
+[![License](https://img.shields.io/badge/License-MIT-green)](LICENSE)
 
-This repository holds a composer-installable app starter.
-It has been built from the
-[development repository](https://github.com/codeigniter4/CodeIgniter4).
+## 📋 Deskripsi
 
-More information about the plans for version 4 can be found in [CodeIgniter 4](https://forum.codeigniter.com/forumdisplay.php?fid=28) on the forums.
+Si-RT adalah sistem informasi terintegrasi untuk manajemen Rukun Tetangga (RT) yang mencakup:
 
-You can read the [user guide](https://codeigniter.com/user_guide/)
-corresponding to the latest version of the framework.
+- ✅ **Manajemen Keuangan RT** - Multi-category iuran, kas masuk/keluar, laporan
+- ✅ **Administrasi Warga** - Data KK, warga, mutasi, statistik demografi
+- ✅ **Manajemen Aset/Inventaris** - Pendataan aset dengan GPS & foto
+- ✅ **Keamanan & Ronda** - Jadwal, absensi GPS, laporan kejadian, kas ronda
+- ✅ **Kegiatan RT** - Perencanaan, dokumentasi, realisasi anggaran
+- ✅ **Layanan Warga** - Pengajuan surat, pengaduan, pengumuman
 
-## Installation & updates
+**Terinspirasi dari:** SIKADES-Lite (Sistem Keuangan Desa)
 
-`composer create-project codeigniter4/appstarter` then `composer update` whenever
-there is a new release of the framework.
+## 🚀 Status Implementasi
 
-When updating, check the release notes to see if there are any changes you might need to apply
-to your `app` folder. The affected files can be copied or merged from
-`vendor/codeigniter4/framework/app`.
+### Phase 1: Foundation & Setup ✅ **100% SELESAI**
 
-## Setup
+- [x] CodeIgniter 4.6.4 installation
+- [x] Database schema (27 tables)
+- [x] Authentication system (login, logout, RBAC)
+- [x] Modern UI dengan Bootstrap 5
+- [x] Initial data seeding
 
-Copy `env` to `.env` and tailor for your app, specifically the baseURL
-and any database settings.
+### Phase 2: Core Modules 🚧 **IN PROGRESS**
 
-## Important Change with index.php
+- [x] **Models Created:**
+  - UserModel
+  - KategoriIuranModel
+  - KartuKeluargaModel
+  - KasTransaksiModel
+  - IuranPembayaranModel
+- [x] **Controllers Created:**
+  - Auth Controller
+  - Dashboard Controller
+  - Keuangan Controller (partial)
+- [ ] Keuangan Views
+- [ ] Administrasi Warga Module
+- [ ] Dashboard dengan real data
 
-`index.php` is no longer in the root of the project! It has been moved inside the *public* folder,
-for better security and separation of components.
+## 🛠️ Technology Stack
 
-This means that you should configure your web server to "point" to your project's *public* folder, and
-not to the project root. A better practice would be to configure a virtual host to point there. A poor practice would be to point your web server to the project root and expect to enter *public/...*, as the rest of your logic and the
-framework are exposed.
+### Backend
+- **Framework:** CodeIgniter 4.6.4
+- **Language:** PHP 8.3.26
+- **Database:** MySQL 8.4.3
 
-**Please** read the user guide for a better explanation of how CI4 works!
+### Frontend (Web)
+- **UI Framework:** Bootstrap 5.3.2
+- **Charts:** Chart.js
+- **Icons:** Font Awesome 6.4.2
 
-## Repository Management
+## 📦 Installation
 
-We use GitHub issues, in our main repository, to track **BUGS** and to track approved **DEVELOPMENT** work packages.
-We use our [forum](http://forum.codeigniter.com) to provide SUPPORT and to discuss
-FEATURE REQUESTS.
+1. **Clone repository:**
+```bash
+git clone https://github.com/mastoroshadiq-prog/sirt.git
+cd sirt
+```
 
-This repository is a "distribution" one, built by our release preparation script.
-Problems with it can be raised on our forum, or as issues in the main repository.
+2. **Install dependencies:**
+```bash
+composer install
+```
 
-## Server Requirements
+3. **Setup database:**
+```bash
+mysql -u root -p
+CREATE DATABASE si_rt_db CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+```
 
-PHP version 8.1 or higher is required, with the following extensions installed:
+4. **Configure .env:**
+```
+database.default.database = si_rt_db
+database.default.username = root
+database.default.password = 
+```
 
-- [intl](http://php.net/manual/en/intl.requirements.php)
-- [mbstring](http://php.net/manual/en/mbstring.installation.php)
+5. **Run migrations:**
+```bash
+php spark migrate
+php spark db:seed InitialDataSeeder
+```
 
-> [!WARNING]
-> - The end of life date for PHP 7.4 was November 28, 2022.
-> - The end of life date for PHP 8.0 was November 26, 2023.
-> - If you are still using PHP 7.4 or 8.0, you should upgrade immediately.
-> - The end of life date for PHP 8.1 will be December 31, 2025.
+6. **Run server:**
+```bash
+php spark serve
+```
 
-Additionally, make sure that the following extensions are enabled in your PHP:
+7. **Login:**
+```
+URL: http://localhost:8080
+Username: admin
+Password: admin123
+```
 
-- json (enabled by default - don't turn it off)
-- [mysqlnd](http://php.net/manual/en/mysqlnd.install.php) if you plan to use MySQL
-- [libcurl](http://php.net/manual/en/curl.requirements.php) if you plan to use the HTTP\CURLRequest library
+## 📄 License
+
+MIT License
+
+---
+
+**Built with ❤️ for Indonesian RT communities**
+
+Last updated: 28 December 2024
