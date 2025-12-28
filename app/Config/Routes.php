@@ -30,3 +30,17 @@ $routes->group('keuangan', function($routes) {
     $routes->get('status-iuran', 'Keuangan::statusIuran');
 });
 
+// Warga (Administrasi) routes
+$routes->group('warga', function($routes) {
+    $routes->get('/', 'Warga::index');
+    $routes->get('kk', 'Warga::listKK');
+    $routes->get('kk/add', 'Warga::formKK');
+    $routes->get('kk/edit/(:num)', 'Warga::formKK/$1');
+    $routes->post('kk/save', 'Warga::saveKK');
+    $routes->get('list', 'Warga::listWarga');
+    $routes->get('add', 'Warga::formWarga');
+    $routes->get('edit/(:num)', 'Warga::formWarga/$1');
+    $routes->post('save', 'Warga::saveWarga');
+    $routes->get('mutasi', 'Warga::mutasi');
+});
+

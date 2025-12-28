@@ -13,7 +13,7 @@
             <i class="fas fa-wallet"></i>
             <span>Keuangan</span>
         </a>
-        <a href="#" class="menu-item <?= isset($active) && $active == 'warga' ? 'active' : '' ?>">
+        <a href="<?= base_url('warga') ?>" class="menu-item <?= isset($active) && $active == 'warga' ? 'active' : '' ?>">
             <i class="fas fa-users"></i>
             <span>Warga</span>
         </a>
