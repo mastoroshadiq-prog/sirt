@@ -151,21 +151,30 @@ class Warga extends BaseController
         }
 
         $keyword = $this->request->getGet('search');
+        $kkId = $this->request->getGet('kk_id');
         
-        if ($keyword) {
+        if ($kkId) {
+            // Filter by KK
+            $listWarga = $this->wargaModel->getWargaByKK($kkId);
+            // Get KK info for title
+            $kkInfo = $this->kkModel->find($kkId);
+        } elseif ($keyword) {
             $listWarga = $this->wargaModel->searchWarga($keyword);
+            $kkInfo = null;
         } else {
             $listWarga = $this->wargaModel->getWargaWithKK();
+            $kkInfo = null;
         }
 
         $data = [
-            'title' => 'Data Warga',
+            'title' => $kkInfo ? 'Anggota KK: ' . $kkInfo['no_kk'] : 'Data Warga',
             'user' => [
                 'nama_lengkap' => session()->get('nama_lengkap'),
                 'role' => session()->get('role'),
             ],
             'list_warga' => $listWarga,
             'keyword' => $keyword,
+            'kk_info' => $kkInfo,
         ];
 
         return view('warga/list_warga', $data);

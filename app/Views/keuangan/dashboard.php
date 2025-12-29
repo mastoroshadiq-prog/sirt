@@ -195,13 +195,17 @@
                 <div class="col-md-6">
                     <div class="chart-card">
                         <h5 class="mb-4"><i class="fas fa-chart-pie me-2 text-primary"></i>Iuran per Kategori</h5>
-                        <canvas id="iuranCategoryChart" height="200"></canvas>
+                        <div style="position: relative; height: 300px;">
+                            <canvas id="iuranCategoryChart"></canvas>
+                        </div>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="chart-card">
                         <h5 class="mb-4"><i class="fas fa-chart-line me-2 text-success"></i>Trend Saldo 6 Bulan Terakhir</h5>
-                        <canvas id="saldoTrendChart" height="200"></canvas>
+                        <div style="position: relative; height: 300px;">
+                            <canvas id="saldoTrendChart"></canvas>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -234,26 +238,42 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
     <script>
-        // Prevent auto-scroll and ensure charts render only after DOM is ready
         document.addEventListener('DOMContentLoaded', function() {
             // Iuran Category Chart
+            const iuranData = <?= json_encode($iuran_by_category) ?>;
             const iuranCtx = document.getElementById('iuranCategoryChart');
+            
             if (iuranCtx) {
-                new Chart(iuranCtx.getContext('2d'), {
+                // Handle empty data
+                const hasData = iuranData && iuranData.length > 0;
+                const labels = hasData ? iuranData.map(item => item.nama_kategori) : ['Belum ada data'];
+                const values = hasData ? iuranData.map(item => parseInt(item.total)) : [1];
+                const colors = hasData ? ['#2563EB', '#10B981', '#F59E0B', '#EF4444', '#8B5CF6'] : ['#E5E7EB'];
+                
+                new Chart(iuranCtx, {
                     type: 'doughnut',
                     data: {
-                        labels: <?= json_encode(array_column($iuran_by_category, 'nama_kategori')) ?>,
+                        labels: labels,
                         datasets: [{
-                            data: <?= json_encode(array_column($iuran_by_category, 'total')) ?>,
-                            backgroundColor: ['#2563EB', '#10B981', '#F59E0B', '#EF4444', '#8B5CF6']
+                            data: values,
+                            backgroundColor: colors,
+                            borderWidth: 0
                         }]
                     },
                     options: {
                         responsive: true,
-                        maintainAspectRatio: false,
+                        maintainAspectRatio: true,
+                        aspectRatio: 1.5,
                         plugins: {
                             legend: {
-                                position: 'bottom'
+                                position: 'bottom',
+                                labels: {
+                                    boxWidth: 15,
+                                    padding: 10
+                                }
+                            },
+                            tooltip: {
+                                enabled: hasData
                             }
                         }
                     }
@@ -261,27 +281,39 @@
             }
 
             // Saldo Trend Chart
+            const trendData = <?= json_encode($saldo_trend) ?>;
             const trendCtx = document.getElementById('saldoTrendChart');
+            
             if (trendCtx) {
-                new Chart(trendCtx.getContext('2d'), {
+                // Handle empty data
+                const hasData = trendData && trendData.length > 0;
+                const labels = hasData ? trendData.map(item => item.month) : ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun'];
+                const values = hasData ? trendData.map(item => parseInt(item.saldo)) : [0, 0, 0, 0, 0, 0];
+                
+                new Chart(trendCtx, {
                     type: 'line',
                     data: {
-                        labels: <?= json_encode(array_column($saldo_trend, 'month')) ?>,
+                        labels: labels,
                         datasets: [{
                             label: 'Saldo Kas',
-                            data: <?= json_encode(array_column($saldo_trend, 'saldo')) ?>,
+                            data: values,
                             borderColor: '#10B981',
                             backgroundColor: 'rgba(16, 185, 129, 0.1)',
                             tension: 0.4,
-                            fill: true
+                            fill: true,
+                            borderWidth: 2
                         }]
                     },
                     options: {
                         responsive: true,
-                        maintainAspectRatio: false,
+                        maintainAspectRatio: true,
+                        aspectRatio: 2,
                         plugins: {
                             legend: {
                                 display: false
+                            },
+                            tooltip: {
+                                enabled: hasData
                             }
                         },
                         scales: {

@@ -9,27 +9,35 @@
             <i class="fas fa-th-large"></i>
             <span>Dashboard</span>
         </a>
-        <a href="<?= base_url('keuangan') ?>" class="menu-item <?= isset($active) && $active == 'keuangan' ? 'active' : '' ?>">
-            <i class="fas fa-wallet"></i>
-            <span>Keuangan</span>
+        <a href="<?= base_url('perencanaan') ?>" class="menu-item <?= isset($active) && $active == 'perencanaan' ? 'active' : '' ?>">
+            <i class="fas fa-clipboard-list"></i>
+            <span>Perencanaan</span>
+        </a>
+        <a href="<?= base_url('organisasi') ?>" class="menu-item <?= isset($active) && $active == 'organisasi' ? 'active' : '' ?>">
+            <i class="fas fa-sitemap"></i>
+            <span>Struktur Organisasi</span>
         </a>
         <a href="<?= base_url('warga') ?>" class="menu-item <?= isset($active) && $active == 'warga' ? 'active' : '' ?>">
             <i class="fas fa-users"></i>
             <span>Warga</span>
         </a>
-        <a href="#" class="menu-item <?= isset($active) && $active == 'kegiatan' ? 'active' : '' ?>">
+        <a href="<?= base_url('kegiatan') ?>" class="menu-item <?= isset($active) && $active == 'kegiatan' ? 'active' : '' ?>">
             <i class="fas fa-calendar-alt"></i>
             <span>Kegiatan</span>
         </a>
-        <a href="#" class="menu-item <?= isset($active) && $active == 'aset' ? 'active' : '' ?>">
-            <i class="fas fa-building"></i>
-            <span>Aset</span>
+        <a href="<?= base_url('keuangan') ?>" class="menu-item <?= isset($active) && $active == 'keuangan' ? 'active' : '' ?>">
+            <i class="fas fa-wallet"></i>
+            <span>Keuangan</span>
         </a>
-        <a href="#" class="menu-item <?= isset($active) && $active == 'keamanan' ? 'active' : '' ?>">
+        <a href="<?= base_url('keamanan') ?>" class="menu-item <?= isset($active) && $active == 'keamanan' ? 'active' : '' ?>">
             <i class="fas fa-shield-alt"></i>
             <span>Keamanan</span>
         </a>
-        <a href="#" class="menu-item <?= isset($active) && $active == 'laporan' ? 'active' : '' ?>">
+        <a href="<?= base_url('aset') ?>" class="menu-item <?= isset($active) && $active == 'aset' ? 'active' : '' ?>">
+            <i class="fas fa-building"></i>
+            <span>Aset</span>
+        </a>
+        <a href="<?= base_url('laporan') ?>" class="menu-item <?= isset($active) && $active == 'laporan' ? 'active' : '' ?>">
             <i class="fas fa-file-alt"></i>
             <span>Laporan</span>
         </a>

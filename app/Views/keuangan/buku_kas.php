@@ -172,14 +172,16 @@
     <script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
     <script>
         $(document).ready(function() {
-            $('#bukuKasTable').DataTable({
-                language: {
-                    url: '//cdn.datatables.net/plug-ins/1.13.7/i18n/id.json'
-                },
-                order: [[0, 'desc']],
-                pageLength: 25,
-                dom: 'frtip'
-            });
+            <?php if (!empty($transaksi)): ?>
+                $('#bukuKasTable').DataTable({
+                    language: {
+                        url: '//cdn.datatables.net/plug-ins/1.13.7/i18n/id.json'
+                    },
+                    order: [[0, 'desc']],
+                    pageLength: 25,
+                    dom: 'frtip'
+                });
+            <?php endif; ?>
         });
     </script>
 </body>

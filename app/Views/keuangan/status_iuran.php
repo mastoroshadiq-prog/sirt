@@ -185,16 +185,23 @@
     <script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
     <script>
         $(document).ready(function() {
-            $('#statusTable').DataTable({
-                language: {
-                    url: '//cdn.datatables.net/plug-ins/1.13.7/i18n/id.json'
-                },
-                pageLength: 25,
-                order: [[1, 'asc']],
-                columnDefs: [
-                    { orderable: false, targets: [5] }
-                ]
-            });
+            <?php if (!empty($payment_status)): ?>
+                // DataTable with rowspan can cause issues, so disable some features
+                try {
+                    $('#statusTable').DataTable({
+                        language: {
+                            url: '//cdn.datatables.net/plug-ins/1.13.7/i18n/id.json'
+                        },
+                        pageLength: 50, // Show more to reduce pagination issues with rowspan
+                        paging: false,  // Disable paging to avoid rowspan issues
+                        searching: true,
+                        ordering: false, // Disable ordering due to rowspan
+                        info: false
+                    });
+                } catch(e) {
+                    console.log('DataTable init skipped:', e.message);
+                }
+            <?php endif; ?>
         });
     </script>
 </body>

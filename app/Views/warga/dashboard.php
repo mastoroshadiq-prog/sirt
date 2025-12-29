@@ -78,19 +78,25 @@
                 <div class="col-md-4">
                     <div class="chart-card">
                         <h5 class="mb-4"><i class="fas fa-venus-mars me-2 text-primary"></i>Berdasarkan Jenis Kelamin</h5>
-                        <canvas id="genderChart" height="200"></canvas>
+                        <div style="position: relative; height: 280px;">
+                            <canvas id="genderChart"></canvas>
+                        </div>
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="chart-card">
                         <h5 class="mb-4"><i class="fas fa-pray me-2 text-success"></i>Berdasarkan Agama</h5>
-                        <canvas id="agamaChart" height="200"></canvas>
+                        <div style="position: relative; height: 280px;">
+                            <canvas id="agamaChart"></canvas>
+                        </div>
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="chart-card">
                         <h5 class="mb-4"><i class="fas fa-birthday-cake me-2 text-warning"></i>Berdasarkan Usia</h5>
-                        <canvas id="usiaChart" height="200"></canvas>
+                        <div style="position: relative; height: 280px;">
+                            <canvas id="usiaChart"></canvas>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -164,65 +170,80 @@
             const genderCtx = document.getElementById('genderChart');
             const genderData = <?= json_encode($stats_gender) ?>;
             if (genderCtx) {
-                new Chart(genderCtx.getContext('2d'), {
-            type: 'doughnut',
-            data: {
-                labels: genderData.map(s => s.jenis_kelamin === 'L' ? 'Laki-laki' : 'Perempuan'),
-                datasets: [{
-                    data: genderData.map(s => s.total),
-                    backgroundColor: ['#2563EB', '#EC4899']
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                    plugins: { legend: { position: 'bottom' } }
-                }
-            });
+                new Chart(genderCtx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: genderData.map(s => s.jenis_kelamin === 'L' ? 'Laki-laki' : 'Perempuan'),
+                        datasets: [{
+                            data: genderData.map(s => s.total),
+                            backgroundColor: ['#2563EB', '#EC4899'],
+                            borderWidth: 0
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: true,
+                        aspectRatio: 1.2,
+                        plugins: { 
+                            legend: { 
+                                position: 'bottom',
+                                labels: { boxWidth: 15, padding: 8 }
+                            } 
+                        }
+                    }
+                });
             }
 
             // Agama Chart
             const agamaCtx = document.getElementById('agamaChart');
             const agamaData = <?= json_encode($stats_agama) ?>;
             if (agamaCtx) {
-                new Chart(agamaCtx.getContext('2d'), {
-            type: 'bar',
-            data: {
-                labels: agamaData.map(s => s.agama),
-                datasets: [{
-                    label: 'Jumlah',
-                    data: agamaData.map(s => s.total),
-                    backgroundColor: '#10B981'
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: { legend: { display: false } },
-                    scales: { y: { beginAtZero: true } }
-                }
-            });
+                new Chart(agamaCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: agamaData.map(s => s.agama),
+                        datasets: [{
+                            label: 'Jumlah',
+                            data: agamaData.map(s => s.total),
+                            backgroundColor: '#10B981'
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: true,
+                        aspectRatio: 1.2,
+                        plugins: { legend: { display: false } },
+                        scales: { y: { beginAtZero: true } }
+                    }
+                });
             }
 
             // Usia Chart
             const usiaCtx = document.getElementById('usiaChart');
             const usiaData = <?= json_encode($stats_usia) ?>;
             if (usiaCtx) {
-                new Chart(usiaCtx.getContext('2d'), {
-            type: 'pie',
-            data: {
-                labels: usiaData.map(s => s.kategori_usia),
-                datasets: [{
-                    data: usiaData.map(s => s.total),
-                    backgroundColor: ['#F59E0B', '#3B82F6', '#8B5CF6', '#10B981', '#EF4444']
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                    plugins: { legend: { position: 'bottom' } }
-                }
-            });
+                new Chart(usiaCtx, {
+                    type: 'pie',
+                    data: {
+                        labels: usiaData.map(s => s.kategori_usia),
+                        datasets: [{
+                            data: usiaData.map(s => s.total),
+                            backgroundColor: ['#F59E0B', '#3B82F6', '#8B5CF6', '#10B981', '#EF4444'],
+                            borderWidth: 0
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: true,
+                        aspectRatio: 1.2,
+                        plugins: { 
+                            legend: { 
+                                position: 'bottom',
+                                labels: { boxWidth: 15, padding: 8 }
+                            } 
+                        }
+                    }
+                });
             }
         });
     </script>

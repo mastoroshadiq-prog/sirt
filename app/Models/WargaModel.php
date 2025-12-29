@@ -75,9 +75,11 @@ class WargaModel extends Model
      */
     public function getWargaByKK(int $kkId)
     {
-        return $this->where('kk_id', $kkId)
-                    ->where('status', 'aktif')
-                    ->orderBy('status_keluarga', 'ASC')
+        return $this->select('warga.*, kartu_keluarga.no_kk, kartu_keluarga.kepala_keluarga')
+                    ->join('kartu_keluarga', 'kartu_keluarga.id = warga.kk_id')
+                    ->where('warga.kk_id', $kkId)
+                    ->where('warga.status', 'aktif')
+                    ->orderBy('warga.status_keluarga', 'ASC')
                     ->findAll();
     }
 
